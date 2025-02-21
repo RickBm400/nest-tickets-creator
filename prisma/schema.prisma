@@ -12,3 +12,20 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum userTypes {
+  MEMBER
+  ADMINISTRATOR
+}
+
+// [MEMBERS, ADMINISTRATORS]
+model Users {
+  id String @id @default(uuid())
+  user_type userTypes @default(MEMBER)
+  user_name String
+  email String @unique
+  password String
+  nick_name String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
