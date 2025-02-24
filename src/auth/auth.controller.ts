@@ -1,6 +1,6 @@
-import { Controller, Post, Req, Body, Res } from '@nestjs/common';
+import { Controller, Get, Post, Req, Body, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { CreateUserDTO } from 'src/users/users.dto';
+import { CreateUserDTO, userLoginDTO } from 'src/users/users.dto';
 import { UserService } from 'src/users/users.service';
 import { AuthService } from './auth.service';
 
@@ -11,8 +11,35 @@ export class AuthController {
     private AuthService: AuthService,
   ) {}
 
-  @Post()
-  async login(@Req() req: Request) {}
+  @Post('login')
+  async login(@Body() userLoginDTO: userLoginDTO, @Res() res: Response) {
+    try {
+      const user = await this.UserService.User({ email: userLoginDTO.email });
+      if (!user) {
+        return res.status(401).json({ message: "Error: User doen't exists" });
+      }
+
+      const mathPassword = await this.AuthService.validatePassword(
+        userLoginDTO.password,
+        user.password,
+      );
+
+      if (!mathPassword) {
+        return res.status(401).json({ message: 'Incorrect Password' });
+      }
+
+      res.status(200).json({
+        message: 'User logged successfully',
+        token: {
+          email: user.email,
+        },
+      });
+    } catch (error) {
+      res.status(401).json({
+        message: 'Incorrect user credentials',
+      });
+    }
+  }
 
   @Post('sign-up')
   async signUp(@Body() createUserDTO: CreateUserDTO, @Res() res: Response) {

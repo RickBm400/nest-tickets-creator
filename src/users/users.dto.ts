@@ -11,3 +11,8 @@ export class UserListDTO {
   nick_name: string | null;
   email: string;
 }
+
+export interface userLoginDTO {
+  email: string;
+  password: string;
+}
