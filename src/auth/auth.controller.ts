@@ -28,11 +28,15 @@ export class AuthController {
         return res.status(401).json({ message: 'Incorrect Password' });
       }
 
+      const { email, user_type, id } = user;
+
       res.status(200).json({
         message: 'User logged successfully',
-        token: {
-          email: user.email,
-        },
+        access_token: await this.AuthService.handleJWT({
+          email,
+          user_type,
+          id,
+        }),
       });
     } catch (error) {
       res.status(401).json({
