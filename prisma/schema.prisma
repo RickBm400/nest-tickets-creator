@@ -25,7 +25,7 @@ model Users {
   user_name String
   email String @unique
   password String
-  nick_name String?
+  nick_name String? @unique
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
