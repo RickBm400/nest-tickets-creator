@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -28,4 +22,33 @@ model Users {
   nick_name String? @unique
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  Tickets Tickets[]
+}
+
+model Events {
+  id String @id @default(uuid())
+  name String
+  address String
+  description String
+
+  Schedule Schedule[]
+}
+
+model Schedule {
+  id String @id @default(uuid())
+  startDate DateTime
+  endDate DateTime
+
+  eventId String
+  event Events @relation(fields: [eventId], references: [id])
+}
+
+model Tickets {
+  id String @id @default(uuid())
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  adminId String
+  admin Users @relation(fields: [adminId], references: [id])
 }
