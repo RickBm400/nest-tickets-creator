@@ -8,47 +8,46 @@ datasource db {
 }
 
 enum userTypes {
-  MEMBER
+  USER
   ADMINISTRATOR
+  STAFF
 }
 
 // [MEMBERS, ADMINISTRATORS]
 model Users {
   id String @id @default(uuid())
-  user_type userTypes @default(MEMBER)
-  user_name String
+  user_type userTypes @default(USER)
+  name String
+  user_name String @unique
   email String @unique
   password String
-  nick_name String? @unique
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-
-  Tickets Tickets[]
 }
 
-model Events {
-  id String @id @default(uuid())
-  name String
-  address String
-  description String
+// model Events {
+//   id String @id @default(uuid())
+//   name String
+//   address String
+//   description String
 
-  Schedule Schedule[]
-}
+//   Schedule Schedule[]
+// }
 
-model Schedule {
-  id String @id @default(uuid())
-  startDate DateTime
-  endDate DateTime
+// model Schedule {
+//   id String @id @default(uuid())
+//   startDate DateTime
+//   endDate DateTime
 
-  eventId String
-  event Events @relation(fields: [eventId], references: [id])
-}
+//   eventId String
+//   event Events @relation(fields: [eventId], references: [id])
+// }
 
-model Tickets {
-  id String @id @default(uuid())
-  name String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  adminId String
-  admin Users @relation(fields: [adminId], references: [id])
-}
+// model Tickets {
+//   id String @id @default(uuid())
+//   name String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   adminId String
+//   admin Users @relation(fields: [adminId], references: [id])
+// }
