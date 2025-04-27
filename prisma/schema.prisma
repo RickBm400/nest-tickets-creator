@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  output = "../src/generated/client"
 }
 
 datasource db {
@@ -13,6 +14,12 @@ enum userTypes {
   STAFF
 }
 
+enum userStatus {
+  ACTIVE
+  INACTIVE
+  DELETED
+}
+
 // [MEMBERS, ADMINISTRATORS]
 model Users {
   id String @id @default(uuid())
@@ -21,6 +28,8 @@ model Users {
   user_name String @unique
   email String @unique
   password String
+  phone_number String
+  status userStatus
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }

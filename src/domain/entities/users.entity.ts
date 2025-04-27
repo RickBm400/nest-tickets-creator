@@ -1,3 +1,5 @@
+import { userStatus } from '@prisma/client';
+
 export enum UserType {
   ADMINISTRATOR = 'ADMINISTRATOR',
   USER = 'USER',
@@ -11,26 +13,24 @@ export enum UserStatus {
 }
 
 export class User {
-  _id: String;
-  name: String;
-  user_name: String;
-  email: String;
-  createdAt: Date;
-  updatedAt: Date;
-  phone_number: String;
-  status: String;
-  user_role: UserType;
-  private password: String;
-
-  constructor(init: Partial<User>) {
-    Object.assign(this, init);
-  }
+  constructor(
+    public id: string,
+    public name: string,
+    public user_name: string,
+    public email: string,
+    public created_at: Date,
+    public updated_at: Date,
+    public phone_number: string,
+    public status: UserStatus = UserStatus.ACTIVE,
+    public user_type: UserType = UserType.USER,
+    public password: string,
+  ) {}
 
   isAdministrator(): boolean {
-    return [UserType.ADMINISTRATOR].includes(this.user_role);
+    return [UserType.ADMINISTRATOR].includes(this.user_type);
   }
 
   isUser(): boolean {
-    return [UserType.USER].includes(this.user_role);
+    return [UserType.USER].includes(this.user_type);
   }
 }
