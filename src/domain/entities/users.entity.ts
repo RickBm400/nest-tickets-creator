@@ -13,18 +13,20 @@ export enum UserStatus {
 }
 
 export class User {
-  constructor(
-    public id: string,
-    public name: string,
-    public user_name: string,
-    public email: string,
-    public created_at: Date,
-    public updated_at: Date,
-    public phone_number: string,
-    public status: UserStatus = UserStatus.ACTIVE,
-    public user_type: UserType = UserType.USER,
-    public password: string,
-  ) {}
+  id: string;
+  name: string;
+  user_name: string;
+  email: string;
+  created_at: Date;
+  updated_at: Date;
+  phone_number: string;
+  status: UserStatus = UserStatus.ACTIVE;
+  user_type: UserType = UserType.USER;
+  password: string;
+
+  constructor(init: Partial<User>) {
+    Object.assign(this, init);
+  }
 
   isAdministrator(): boolean {
     return [UserType.ADMINISTRATOR].includes(this.user_type);

@@ -11,7 +11,7 @@ export class UserController {
   findUser(@Query('userId') userId: String) {}
 
   @Post()
-  createNewUser(@Body() newUserDTO: User) {
+  createNewUser(@Body() newUserDTO: NewUserDTO) {
     this.userService.createNewUser(newUserDTO);
   }
 }

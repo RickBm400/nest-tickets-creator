@@ -1,12 +1,24 @@
-import { UserType } from 'src/domain/entities/users.entity';
+import { UserType, UserStatus } from 'src/domain/entities/users.entity';
+import { IsDate, IsEmail, IsHash, IsNotEmpty, IsString } from 'class-validator';
 
-export interface NewUserDTO {
-  id: string;
-  user_type: UserType;
+export class NewUserDTO {
   name: string;
+  user_type: UserType;
   user_name: string;
+
+  @IsEmail()
   email: string;
+
+  @IsNotEmpty()
   password: string;
+
+  @IsDate()
   created_at: Date;
+
+  @IsDate()
   updated_at: Date;
+
+  @IsString()
+  phone_number: string;
+  status: UserStatus;
 }
