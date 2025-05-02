@@ -82,5 +82,10 @@
     "moduleNameMapper": {
       "^src/(.*)$": "<rootDir>/src/$1"
     }
-  }
+  },
+  "engines": {
+    "node": "22.11.0",
+    "npm": "10.9.0"
+  },
+  "engineStrict": true
 }
