@@ -21,6 +21,10 @@ export class UserController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   createNewUser(@Body() newUserDTO: NewUserDTO) {
-    return this.userService.createNewUser(newUserDTO);
+    try {
+      return this.userService.createNewUser(newUserDTO);
+    } catch (error) {
+      throw error;
+    }
   }
 }

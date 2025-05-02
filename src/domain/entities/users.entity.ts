@@ -1,5 +1,3 @@
-import { userStatus } from '@prisma/client';
-
 export enum UserType {
   ADMINISTRATOR = 'ADMINISTRATOR',
   USER = 'USER',
@@ -17,12 +15,12 @@ export class User {
   name: string;
   user_name: string;
   email: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at?: Date;
+  updated_at?: Date;
   phone_number: string;
   status: UserStatus = UserStatus.ACTIVE;
   user_type: UserType = UserType.USER;
-  password: string;
+  password?: string;
 
   constructor(init: Partial<User>) {
     Object.assign(this, init);

@@ -3,7 +3,7 @@ import { User } from 'src/domain/entities/users.entity';
 import { IUserRepository } from 'src/domain/interfaces/repositories/user.repository.interface';
 import { UsersBaseRepository } from './users-baserepository';
 import { NewUserDTO } from 'src/infrastructure/presenters/dtos/users.dto';
-import { PrismaService } from 'src/infrastructure/database/prisma/prisma.service';
+import { PrismaService } from 'src/infrastructure/database/prisma/prismaClient';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
