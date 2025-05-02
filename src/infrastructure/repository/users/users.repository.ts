@@ -4,6 +4,7 @@ import { IUserRepository } from 'src/domain/interfaces/repositories/user.reposit
 import { UsersBaseRepository } from './users-baserepository';
 import { NewUserDTO } from 'src/infrastructure/presenters/dtos/users.dto';
 import { PrismaService } from 'src/infrastructure/database/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class UserRepository
@@ -15,7 +16,11 @@ export class UserRepository
   }
 
   async addUser(dto: NewUserDTO): Promise<User> {
-    const _user = await this.prisma.users.create({ data: dto });
+    const data: Prisma.UsersCreateInput = {
+      ...dto,
+      status: 'ACTIVE',
+    };
+    const _user = await this.prisma.users.create({ data });
     return this.toLocalModule(_user);
   }
   findUserById(userId: String): Promise<User | null> {
