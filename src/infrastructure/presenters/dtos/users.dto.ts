@@ -12,12 +12,6 @@ export class NewUserDTO {
   @IsNotEmpty()
   password: string;
 
-  @IsDate()
-  created_at: Date;
-
-  @IsDate()
-  updated_at: Date;
-
   @IsString()
   phone_number: string;
   status: UserStatus;

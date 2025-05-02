@@ -31,7 +31,7 @@ model Users {
   phone_number String
   status userStatus
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  updated_at DateTime @updatedAt @default(now())
 }
 
 // model Events {

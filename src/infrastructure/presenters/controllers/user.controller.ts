@@ -12,6 +12,6 @@ export class UserController {
 
   @Post()
   createNewUser(@Body() newUserDTO: NewUserDTO) {
-    this.userService.createNewUser(newUserDTO);
+    return this.userService.createNewUser(newUserDTO);
   }
 }
