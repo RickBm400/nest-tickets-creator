@@ -6,6 +6,7 @@ import {
   MinLength,
   MaxLength,
   IsIn,
+  IsOptional,
 } from 'class-validator';
 
 export class NewUserDTO {
@@ -28,6 +29,7 @@ export class NewUserDTO {
   password: string;
 
   @IsString()
+  @IsOptional()
   phone_number: string;
 }
 

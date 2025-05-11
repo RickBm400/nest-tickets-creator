@@ -5,10 +5,10 @@ import * as modules from './modules';
 
 @Module({
   imports: [
-    ...Object.values(modules),
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    ...Object.values(modules),
   ],
 })
 export class AppModule {}

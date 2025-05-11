@@ -28,7 +28,7 @@ model Users {
   user_name String @unique
   email String @unique
   password String
-  phone_number String
+  phone_number String @default("")
   status userStatus
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt @default(now())

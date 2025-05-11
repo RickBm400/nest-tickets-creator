@@ -1,30 +1,55 @@
-import { Injectable } from '@nestjs/common';
-import { User } from 'src/domain/entities/users.entity';
+import {
+  BadRequestException,
+  ConflictException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { User, UserStatus } from 'src/domain/entities/users.entity';
 import { IUserRepository } from 'src/domain/interfaces/repositories/user.repository.interface';
 import { UsersBaseRepository } from './users-baserepository';
 import { NewUserDTO } from 'src/infrastructure/presenters/dtos/users.dto';
-import { PrismaService } from 'src/infrastructure/database/prisma/prismaClient';
-import { Prisma } from '@prisma/client';
+import { LocalPrismaClient } from 'src/infrastructure/database/prisma/prisma.client';
+import { Prisma, PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class UserRepository
   extends UsersBaseRepository
   implements IUserRepository
 {
-  constructor(private readonly prisma: PrismaService) {
+  constructor(private readonly prisma: LocalPrismaClient) {
     super();
   }
 
   async addUser(dto: NewUserDTO): Promise<User> {
-    const data: Prisma.UsersCreateInput = {
-      ...dto,
-      status: 'ACTIVE',
-    };
-    const _user = await this.prisma.users.create({ data });
-    return this.toLocalModule(_user);
+    try {
+      const data: Prisma.UsersCreateInput = {
+        ...dto,
+        status: UserStatus.ACTIVE,
+      };
+      const _user = await this.prisma.users.create({ data });
+      return this.toLocalModule(_user);
+    } catch (error) {
+      throw new ConflictException({
+        message: 'Conflict inside documents',
+        status: HttpStatus.CONFLICT,
+      });
+    }
   }
-  findUserById(userId: String): Promise<User | null> {
-    throw new Error('Method not implemented.');
+
+  async findUserById(userId: string): Promise<User | null> {
+    const _user = await this.prisma.users.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!_user) {
+      throw new NotFoundException();
+    }
+
+    return this.toLocalModule(_user);
   }
   findUserByEmail(email: String): Promise<User | null> {
     throw new Error('Method not implemented.');

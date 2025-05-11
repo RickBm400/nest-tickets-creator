@@ -1,8 +1,9 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { IUserRepository } from 'src/domain/interfaces/repositories/user.repository.interface';
 import { NewUserDTO } from 'src/infrastructure/presenters/dtos/users.dto';
 import { AuthService } from './auth.service';
 
+@Injectable()
 export class UserService {
   constructor(
     @Inject('IUserRepository')
@@ -11,8 +12,9 @@ export class UserService {
   ) {}
 
   async createNewUser(data: NewUserDTO) {
+    const password = await this.authService.hashPassword(data.password);
     const _modifiedData = Object.assign(data, {
-      password: this.authService.hashPassword(data.password),
+      password,
     });
     return this.userRepository.addUser(_modifiedData);
   }

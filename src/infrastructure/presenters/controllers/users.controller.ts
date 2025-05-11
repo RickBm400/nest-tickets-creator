@@ -8,7 +8,10 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { UserService } from 'src/application/services/users.service';
-import { NewUserDTO } from 'src/infrastructure/presenters/dtos/users.dto';
+import {
+  NewUserDTO,
+  FindUserDto,
+} from 'src/infrastructure/presenters/dtos/users.dto';
 
 @Controller('users')
 export class UserController {
@@ -16,15 +19,13 @@ export class UserController {
 
   @Get()
   @HttpCode(HttpStatus.FOUND)
-  findUser(@Query('userId') userId: String) {}
+  findUser(@Query('userId') userId: string) {
+    return this.userService.findUserById(userId);
+  }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
   createNewUser(@Body() newUserDTO: NewUserDTO) {
-    try {
-      return this.userService.createNewUser(newUserDTO);
-    } catch (error) {
-      throw error;
-    }
+    return this.userService.createNewUser(newUserDTO);
   }
 }

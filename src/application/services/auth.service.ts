@@ -1,13 +1,15 @@
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as Bcrypt from 'bcrypt';
-import { InternalServerErrorException } from '@nestjs/common';
+import { env } from 'process';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 
+@Injectable()
 export class AuthService {
+  private env = process.env;
   constructor(
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-    private readonly bcrypt: typeof Bcrypt,
   ) {}
 
   async generateJWT(payload: any) {
@@ -15,14 +17,15 @@ export class AuthService {
   }
 
   async hashPassword(password: string) {
-    const _salt = this.configService.get<number>('BCRYPT_SALT');
+    const saltRounds = Number(this.configService.get<string>('BCRYPT_SALT'));
+    const _salt = await Bcrypt.genSalt(saltRounds);
     if (!_salt) {
       throw new InternalServerErrorException();
     }
-    return await this.bcrypt.hash(password, _salt);
+    return await Bcrypt.hash(password, _salt);
   }
 
   async validatePassword(password: string, hash: string) {
-    return await this.bcrypt.compare(password, hash);
+    return await Bcrypt.compare(password, hash);
   }
 }
