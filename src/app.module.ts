@@ -1,6 +1,6 @@
+// module imports
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-// module imports
 import * as modules from './modules';
 
 @Module({

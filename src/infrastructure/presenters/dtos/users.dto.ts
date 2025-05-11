@@ -23,9 +23,19 @@ export class NewUserDTO {
   @IsEmail()
   email: string;
 
+  //create personalized validation
   @IsNotEmpty()
   password: string;
 
   @IsString()
   phone_number: string;
+}
+
+export class FindUserDto {
+  @IsString()
+  id: string;
+
+  @IsEmail()
+  @IsString()
+  email: string;
 }

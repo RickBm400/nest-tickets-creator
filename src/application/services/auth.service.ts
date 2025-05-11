@@ -10,10 +10,8 @@ export class AuthService {
     private readonly bcrypt: typeof Bcrypt,
   ) {}
 
-  async signIn() {}
-
   async generateJWT(payload: any) {
-    return this.jwtService.sign(payload);
+    return this.jwtService.signAsync(payload);
   }
 
   async hashPassword(password: string) {
