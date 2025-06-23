@@ -21,7 +21,6 @@ export class UserRepository
   constructor(private readonly prisma: LocalPrismaClient) {
     super();
   }
-
   async addUser(dto: NewUserDTO): Promise<User> {
     try {
       const data: Prisma.UsersCreateInput = {
@@ -57,7 +56,7 @@ export class UserRepository
   updateUser(id: String, data: User): Promise<User> {
     throw new Error('Method not implemented.');
   }
-  deleteUser(Id: String): Boolean {
+  deleteUser(Id: string): boolean {
     throw new Error('Method not implemented.');
   }
 }

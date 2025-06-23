@@ -20,6 +20,6 @@ export class UserService {
   }
 
   async findUserById(userId: string) {
-    await this.userRepository.findUserById(userId);
+    return this.userRepository.findUserById(userId);
   }
 }

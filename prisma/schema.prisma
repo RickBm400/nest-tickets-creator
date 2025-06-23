@@ -22,7 +22,7 @@ enum userStatus {
 
 // [MEMBERS, ADMINISTRATORS]
 model Users {
-  id String @id @default(uuid())
+  id String @id @default(cuid())
   user_type userTypes @default(USER)
   name String
   user_name String @unique

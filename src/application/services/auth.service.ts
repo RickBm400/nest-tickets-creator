@@ -1,7 +1,6 @@
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as Bcrypt from 'bcrypt';
-import { env } from 'process';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 
 @Injectable()
